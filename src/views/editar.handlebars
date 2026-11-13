@@ -1,0 +1,39 @@
+<section class="presentacion" aria-labelledby="titulo-edicion">
+  <a class="volver" href="/">← Volver a los avistamientos</a>
+  <p class="sobrelinea">ACTUALIZACIÓN DEL REGISTRO</p>
+  <h1 id="titulo-edicion">Editar avistamiento</h1>
+  <p class="descripcion">Actualiza la zona y el estado de conservación de la especie.</p>
+</section>
+
+<section class="panel panel-edicion" aria-labelledby="nombre-especie">
+  <div class="titulo-panel">
+    <h2 id="nombre-especie">{{avistamiento.nombreComun}}</h2>
+    <p><em>{{avistamiento.nombreCientifico}}</em> · {{avistamiento.categoria}}</p>
+  </div>
+  <dl class="datos-registro">
+    <div>
+      <dt>Investigador</dt>
+      <dd>{{avistamiento.investigador}}</dd>
+    </div>
+    <div>
+      <dt>Fecha de registro</dt>
+      <dd>{{formatearFecha avistamiento.fechaRegistro}}</dd>
+    </div>
+  </dl>
+  <form action="/api/avistamientos/update/{{avistamiento._id}}" method="post" class="formulario formulario-edicion">
+    <div class="campo">
+      <label for="zona">Zona del avistamiento <span aria-hidden="true">*</span></label>
+      <input id="zona" name="zona" type="text" value="{{avistamiento.zona}}" required>
+    </div>
+    <div class="campo">
+      <label for="estadoConservacion">Estado de conservación</label>
+      <select id="estadoConservacion" name="estadoConservacion">
+        {{#each estados}}<option value="{{valor}}" {{#if seleccionado}} selected{{/if}}>{{valor}}</option>{{/each}}
+      </select>
+    </div>
+    <div class="acciones-formulario">
+      <a href="/" class="boton boton-secundario">Cancelar</a>
+      <button type="submit" class="boton boton-principal">Guardar cambios</button>
+    </div>
+  </form>
+</section>

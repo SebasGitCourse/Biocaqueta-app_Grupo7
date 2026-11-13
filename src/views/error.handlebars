@@ -1,0 +1,11 @@
+<section class="panel panel-error" aria-labelledby="titulo-error">
+  <p class="sobrelinea">ERROR {{estado}}</p>
+  <h1 id="titulo-error">No se pudo completar la solicitud</h1>
+  <p class="descripcion">{{mensaje}}</p>
+  {{#if detalles.length}}
+  <ul class="errores" aria-label="Datos que debes revisar">
+    {{#each detalles}}<li>{{mensaje}}</li>{{/each}}
+  </ul>
+  {{/if}}
+  <a class="boton boton-principal" href="/">Volver a los avistamientos</a>
+</section>

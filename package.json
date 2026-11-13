@@ -1,0 +1,18 @@
+{
+  "name": "biocaqueta-app",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Sistema de monitoreo de biodiversidad y avistamientos del Piedemonte Amazónico.",
+  "main": "src/app.js",
+  "engines": { "node": ">=22.12.0" },
+  "scripts": {
+    "start": "node --env-file=.env src/app.js",
+    "dev": "node --watch --env-file=.env src/app.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "express-handlebars": "^7.1.3",
+    "mongoose": "^8.19.0"
+  }
+}

@@ -1,0 +1,105 @@
+<section class="presentacion" aria-labelledby="titulo-principal">
+  <p class="sobrelinea">MONITOREO DE BIODIVERSIDAD</p>
+  <h1 id="titulo-principal">Avistamientos del Piedemonte Amazónico</h1>
+  <p class="descripcion">Registra la fauna y flora de nuestro territorio y consulta los avistamientos de campo.</p>
+</section>
+
+<section class="panel" aria-labelledby="titulo-registro">
+  <div class="titulo-panel">
+    <h2 id="titulo-registro">Registrar avistamiento</h2>
+    <p>Los campos con <span aria-hidden="true">*</span> son obligatorios.</p>
+  </div>
+  <form action="/api/avistamientos" method="post" class="formulario">
+    <div class="campo">
+      <label for="nombreComun">Nombre común <span aria-hidden="true">*</span></label>
+      <input id="nombreComun" name="nombreComun" type="text" placeholder="Ej. Danta amazónica" required>
+    </div>
+    <div class="campo">
+      <label for="nombreCientifico">Nombre científico <span aria-hidden="true">*</span></label>
+      <input id="nombreCientifico" name="nombreCientifico" type="text" placeholder="Ej. Tapirus terrestris" required>
+    </div>
+    <div class="campo">
+      <label for="categoria">Categoría <span aria-hidden="true">*</span></label>
+      <select id="categoria" name="categoria" required>
+        <option value="" disabled selected>Selecciona una categoría</option>
+        {{#each categorias}}<option value="{{this}}">{{this}}</option>{{/each}}
+      </select>
+    </div>
+    <div class="campo">
+      <label for="zona">Zona del avistamiento <span aria-hidden="true">*</span></label>
+      <input id="zona" name="zona" type="text" placeholder="Ej. Río Hacha" required>
+    </div>
+    <div class="campo">
+      <label for="estadoConservacion">Estado de conservación</label>
+      <select id="estadoConservacion" name="estadoConservacion">
+        {{#each estados}}<option value="{{this}}">{{this}}</option>{{/each}}
+      </select>
+    </div>
+    <div class="campo">
+      <label for="investigador">Investigador <span aria-hidden="true">*</span></label>
+      <input id="investigador" name="investigador" type="text" placeholder="Nombre del estudiante o docente"
+        autocomplete="name" required>
+    </div>
+    <div class="acciones-formulario">
+      <p class="ayuda">La fecha de registro se asigna automáticamente.</p>
+      <button type="submit" class="boton boton-principal">Guardar avistamiento</button>
+    </div>
+  </form>
+</section>
+
+<section class="panel panel-listado" aria-labelledby="titulo-listado">
+  <div class="titulo-panel cabecera-listado">
+    <div>
+      <h2 id="titulo-listado">Avistamientos registrados</h2>
+      <p>Del más reciente al más antiguo.</p>
+    </div>
+    <span class="contador">{{avistamientos.length}} registros</span>
+  </div>
+  {{#if avistamientos.length}}
+  <div class="tabla-contenedor" tabindex="0" role="region"
+    aria-label="Tabla de avistamientos, desplázate horizontalmente para ver todas las columnas">
+    <table>
+      <caption class="solo-lectores">Avistamientos guardados y acciones para editar o eliminar cada registro.</caption>
+      <thead>
+        <tr>
+          <th scope="col">Especie</th>
+          <th scope="col">Categoría</th>
+          <th scope="col">Zona</th>
+          <th scope="col">Conservación</th>
+          <th scope="col">Investigador</th>
+          <th scope="col">Fecha de registro</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each avistamientos}}
+        <tr>
+          <th scope="row"><span class="nombre-especie">{{nombreComun}}</span><em
+              class="nombre-cientifico">{{nombreCientifico}}</em></th>
+          <td>{{categoria}}</td>
+          <td>{{zona}}</td>
+          <td><span class="etiqueta">{{estadoConservacion}}</span></td>
+          <td>{{investigador}}</td>
+          <td class="fecha">{{formatearFecha fechaRegistro}}</td>
+          <td>
+            <div class="acciones-tabla">
+              <a class="boton boton-secundario boton-pequeno" href="/editar/{{_id}}"
+                aria-label="Editar avistamiento de {{nombreComun}}">Editar</a>
+              <form action="/api/avistamientos/delete/{{_id}}" method="post">
+                <button type="submit" class="boton boton-eliminar boton-pequeno"
+                  aria-label="Eliminar avistamiento de {{nombreComun}}">Eliminar</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+  {{else}}
+  <div class="vacio">
+    <h3>Aún no hay avistamientos</h3>
+    <p>Completa el formulario para registrar la primera especie.</p>
+  </div>
+  {{/if}}
+</section>
